@@ -5,14 +5,13 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.*;
 
-public class DevTest {
+public class EntryPoint {
 
 	public static void main(String[] args) 
 	{	
-		DevTest Render = new DevTest();
+		EntryPoint Render = new EntryPoint();
 		Render.start();
 	}
-	
 	
 	
 	public void start() 
