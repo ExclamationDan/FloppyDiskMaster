@@ -29,4 +29,13 @@ public class CVec2
 		
  		return Elements;
 	}
+	
+	float[] ToArrayPos()
+	{
+		float[] Elements = new float[2];
+		Elements[0] = x;
+		Elements[1] = y;
+ 		return Elements;
+	}
+	
 }

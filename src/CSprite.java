@@ -1,16 +1,7 @@
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.FloatBuffer;
-
+import org.lwjgl.opengl.ARBVertexArrayObject;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.opengl.GL40;
-import org.newdawn.slick.opengl.Texture;
-
-
-
 
 
 public class CSprite extends CCollidable
@@ -30,25 +21,29 @@ public class CSprite extends CCollidable
 	
 	void Draw()
 	{	
+		//Engine.Render.UseShader("default");
 		//int CurrentShader = Engine.Render.m_CurrentShader;
 		//int Tex = GL20.glGetUniformLocation(CurrentShader,"in_Texture");
 		
-		GL13.glActiveTexture(GL13.GL_TEXTURE0);
+		//GL13.glActiveTexture(GL13.GL_TEXTURE0);
 		
-		GL11.glBindTexture(GL11.GL_TEXTURE_2D, m_Texture.m_TextureID);
+		//GL11.glBindTexture(GL11.GL_TEXTURE_2D, m_Texture.m_TextureID);
 		//GL20.glUniform1i(Tex, m_Texture.m_TextureID);
 		
-		GL30.glBindVertexArray(m_VAO);
-		GL20.glEnableVertexAttribArray(0);
-		GL20.glEnableVertexAttribArray(1);
+		//System.out.println("Draw!");
+		
+		ARBVertexArrayObject.glBindVertexArray(m_VAO);
+		//System.out.println("VAO Num: "+m_VAO);
+		//GL20.glEnableVertexAttribArray(0);
+		//GL20.glEnableVertexAttribArray(1);
 		 
 		// Draw the vertices
-		GL11.glDrawArrays(GL11.GL_QUADS, 0, 8);
+		GL11.glDrawArrays(GL11.GL_QUADS, 0, 4);
 		
 		
 		GL20.glDisableVertexAttribArray(0);
-		GL20.glDisableVertexAttribArray(1);
-		GL30.glBindVertexArray(0);
+		//GL20.glDisableVertexAttribArray(1);
+		ARBVertexArrayObject.glBindVertexArray(0);
 		
 		/*
 		GL11.glBegin(GL11.GL_QUADS);	
@@ -58,9 +53,9 @@ public class CSprite extends CCollidable
 			GL11.glTexCoord2f(m_Vertices[V].s,m_Vertices[V].t);
 			GL11.glVertex2f(m_Vertices[V].x,m_Vertices[V].y);
 		}
-		
+		*/
 		GL11.glEnd();
-		 */
+		 
 	}
 
 

@@ -2,11 +2,11 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.FloatBuffer;
 
+import org.lwjgl.opengl.ARBVertexArrayObject;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL15;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.GL30;
-import org.lwjgl.opengl.GL40;
+import org.lwjgl.opengl.GLContext;
 
 public class CQuad 
 {
@@ -26,7 +26,7 @@ public class CQuad
 	
 	CQuad()
 	{
-		SetSize(5,5);
+		//SetSize(5,5);
 	}
 	
 	CQuad(int Height, int Width)
@@ -68,56 +68,74 @@ public class CQuad
 		m_Matrix[13] = m_Pos.y;
 	}
 	
-	FloatBuffer Array_ToFB(CVec2[] A)
+
+	FloatBuffer Array_FB_Position(CVec2[] A)
 	{
-		float[] Data = new float[A.length*4];
+		float[] Data = new float[A.length*2];
 		int Index = 0;
 		for (int i = 0; i < A.length; i++)
 		{
-			float[] ParseArray = A[i].ToArray();
+			float[] ParseArray = A[i].ToArrayPos();
 			for (int E = 0; E < ParseArray.length; E++)
 			{	
 				Data[Index] = ParseArray[E];
+				System.out.println(Data[Index]);
 				Index++;
 				
 			}
 		}
 		
-		ByteBuffer BB = ByteBuffer.allocateDirect( (A.length * 4) * 4);
+		ByteBuffer BB = ByteBuffer.allocateDirect( Data.length * Float.SIZE);
 		BB.order(ByteOrder.nativeOrder());
 		FloatBuffer FB = BB.asFloatBuffer();
-		//FB.position(0);
 		FB.put(Data);
-		FB.position(0);
+		//FB.position(0);
 		FB.flip();
-		
+		System.out.println("Returning FloatBuffer");
 		return FB;
 	}
+	
+	
+	
 	
 	void GLUpdateDrawBuffers(CVec2[] Vertex_TexData)
 	{
 		System.out.println("GLUpdateDrawBuffers(): Called");
-		GL15.glDeleteBuffers(m_VBO);
 		
+		if (!GLContext.getCapabilities().GL_ARB_vertex_array_object)
+		{
+			System.out.println("Vertex Array buffers unavailable.");
+			return;
+		}
+			
+		if (!GLContext.getCapabilities().GL_ARB_vertex_buffer_object) 
+		{
+			System.out.println("Vertex buffers unavailable.");
+			return;
+		}
 		
+
 		//Create VAO buffer.
-		m_VAO = GL30.glGenVertexArrays();
-		GL30.glBindVertexArray(m_VAO);
-		
-		
-		// Create VBO buffer, Upload Vert Data
+		m_VAO = ARBVertexArrayObject.glGenVertexArrays();		
+		ARBVertexArrayObject.glBindVertexArray(m_VAO);
+			
 		m_VBO = GL15.glGenBuffers();
 		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, m_VBO);
-		GL15.glBufferData(m_VBO, Array_ToFB(m_Vertices), GL15.GL_STATIC_DRAW);
+		GL15.glBufferData(m_VBO, Array_FB_Position(m_Vertices), GL15.GL_STATIC_DRAW);
 		
-		// Pos
-		GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT,false, 16, 0);
-		// Texcoord (Why does a zero offset make this work, shouldn't it be 8 bytes?)
-		GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT,false, 16, 0);
+		GL11.glEnableClientState(GL11.GL_VERTEX_ARRAY);
 		
+		GL11.glVertexPointer(2, GL11.GL_FLOAT, 8, 0);
+		//GL20.glVertexAttribPointer(0, 2, GL11.GL_FLOAT,false, 0, 0);
+		GL11.glDisableClientState(GL11.GL_VERTEX_ARRAY);
+		
+
+
+		//GL20.glVertexAttribPointer(1, 2, GL11.GL_FLOAT,false, 16, 0);
 		//Finish and save VAO state.
-		GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
-		GL30.glBindVertexArray(0);
+		
+		//GL15.glBindBuffer(GL15.GL_ARRAY_BUFFER, 0);
+		//ARBVertexArrayObject.glBindVertexArray(0);
 		
 	}
 	

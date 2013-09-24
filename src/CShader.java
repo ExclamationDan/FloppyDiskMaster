@@ -1,16 +1,18 @@
-import org.lwjgl.opengl.GL11;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
-import org.lwjgl.BufferUtils;
+
 import org.lwjgl.opengl.ARBShaderObjects;
 import org.lwjgl.opengl.ARBVertexShader;
 import org.lwjgl.opengl.ARBFragmentShader;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
-import org.lwjgl.opengl.Util;
-import org.newdawn.slick.util.ResourceLoader;
+
+
 
 
 public class CShader 
@@ -87,6 +89,7 @@ public class CShader
             {
                 vertexCode+=line + "\n";
             }
+            reader.close();
         }
         catch(Exception e)
         {
@@ -97,8 +100,8 @@ public class CShader
         * associate the vertex code String with the created vertex shader
         * and compile
         */
-        GL20.glBindAttribLocation(m_ShaderProgram, 0, "in_Position");
-        GL20.glBindAttribLocation(m_ShaderProgram, 1, "in_TextureCoord");
+       // GL20.glBindAttribLocation(m_ShaderProgram, 0, "in_Position");
+       // GL20.glBindAttribLocation(m_ShaderProgram, 1, "in_TextureCoord");
         GL20.glShaderSource(m_ShaderVert,vertexCode);
         GL20.glCompileShader(m_ShaderVert);
 
@@ -125,6 +128,7 @@ public class CShader
             {
                 fragCode+=line + "\n";
             }
+            reader.close();
         }
         catch(Exception e)
         {

@@ -1,13 +1,13 @@
-	#version 150 core
+#version 120
 
-	uniform sampler2D 	in_Texture;
-	in vec2 			pass_TextureCoord;
-	out vec4 			out_Color;
+	//uniform sampler2D 	in_Texture;
+	//varying vec2 			pass_TextureCoord;
+	//out vec4 			out_Color;
 
 	void main(void) 
 	{
-		//out_Color = pass_Color;
-	
+
 		// Override out_Color with our texture pixel
-		out_Color = texture(in_Texture, pass_TextureCoord);
+		gl_FragColor = vec4(1.0, 0, 0.0, 1.0);
+		//texture2D(in_Texture, pass_TextureCoord);
 	}

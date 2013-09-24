@@ -1,23 +1,12 @@
 import java.io.IOException;
-import org.lwjgl.LWJGLException;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
-import org.lwjgl.opengl.GL11;
 
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL20;
-import org.newdawn.slick.Color;
+
 import org.newdawn.slick.opengl.Texture;
 import org.newdawn.slick.opengl.TextureLoader;
 import org.newdawn.slick.util.ResourceLoader;
 
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.InputStreamReader;
-
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
 
 import java.util.Vector;
 
@@ -56,7 +45,7 @@ public class CResource extends CEngineModule
 			}
 		}
 		
-		System.out.println("UseShader(): Failed to fine AliasName. Did you call LoadShader()?");
+		System.out.println("UseShader(): Failed to find AliasName. Did you call LoadShader()?");
 		
 	}
 	

@@ -38,14 +38,12 @@ public class CWindow extends CEngineModule
 		Engine.Resource.UseShader("default");
 		
 		Sprite = new CSprite("res/sprites/player/player_idle.tga");
-		Sprite.SetSize(100, 100);
+		//Sprite.SetSize(100, 100);
 	}
 	public void WindowLoop()
-	{
-		
-		
+	{	
 		m_IsOpen = !Display.isCloseRequested();
-		
+
 
 		GL11.glMatrixMode(GL11.GL_PROJECTION);		
 		GL11.glLoadIdentity();
